@@ -25,4 +25,10 @@ FROM common-build-stage as prod
 
 ENV NODE_ENV production
 
-CMD ["npm", "run", "build"]
+ARG REACT_APP_API_HOST=https://localhost:5000
+RUN npm run build
+
+FROM nginx:1.23.2-alpine
+COPY --from=prod /app/build/ /var/www/
+COPY ./nginx.conf /etc/nginx/nginx.conf
+EXPOSE 80
