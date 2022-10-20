@@ -9,7 +9,7 @@ RUN npm install
 
 RUN chown -R node:node /app
 
-COPY . ./app
+COPY . .
 
 EXPOSE 3000
 
