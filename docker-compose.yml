@@ -22,7 +22,7 @@ services:
       - "5000:5000"
     volumes:
       - ./api:/app
-      - /app/node_mmodules
+      - /app/node_modules
 
   fe:
     build:
@@ -33,7 +33,7 @@ services:
       - "3000:3000"
     volumes:
       - ./fe:/app
-      - /app/node_mmodules
+      - /app/node_modules
 
 volumes:
   upb-db-data:
