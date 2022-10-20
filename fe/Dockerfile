@@ -16,6 +16,7 @@ EXPOSE 3000
 # Development build stage
 FROM common-build-stage as dev
 
+ARG REACT_APP_API_HOST=http://localhost:5000
 ENV NODE_ENV development
 
 CMD ["npm", "run", "start"]
@@ -25,7 +26,7 @@ FROM common-build-stage as build
 
 ENV NODE_ENV production
 
-ARG REACT_APP_API_HOST=https://localhost:5000
+ARG REACT_APP_API_HOST=http://teddlab.digital:5000
 RUN npm run build
 
 FROM nginx:1.21.0-alpine as prod

@@ -7,7 +7,7 @@ const Abc = () => {
   const [res, setRes] = useState("")
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/users`).then(res => {
+    axios.get(`${process.env.REACT_APP_API_HOST}/users`).then(res => {
       const nieco = res.data;
       setRes(nieco);
     })
