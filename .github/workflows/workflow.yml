@@ -32,4 +32,4 @@ jobs:
         with:
           context: "{{defaultContext}}:api"
           push: true
-          tags: ghcr.io/user/app:latest
+          tags: ghcr.io/martinsiran/UPB-webapp/api:latest
