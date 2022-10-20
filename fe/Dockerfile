@@ -7,7 +7,7 @@ COPY package.json ./
 COPY package-lock.json ./
 RUN npm install
 
-RUN chown -R node:node /app
+RUN mkdir node_modules/.cache && chmod -R 777 node_modules/.cache
 
 COPY . .
 
@@ -16,7 +16,7 @@ EXPOSE 3000
 # Development build stage
 FROM common-build-stage as dev
 
-ARG REACT_APP_API_HOST=http://localhost:5000
+ENV REACT_APP_API_HOST=http://localhost:5000
 ENV NODE_ENV development
 
 CMD ["npm", "run", "start"]
