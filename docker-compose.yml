@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8
+    restart: unless-stopped
+    env_file: db.env
+    ports:
+      - "3306:3306"
+    volumes:
+      - upb-db-data:/var/lib/mysql
+
+  api:
+    depends_on:
+      - db
+    build:
+      context: ./api
+      target: dev
+    restart: unless-stopped
+    env_file: api.env
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./api:/app
+      - /app/node_mmodules
+
+  fe:
+    build:
+      context: ./fe
+      target: dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./fe:/app
+      - /app/node_mmodules
+
+volumes:
+  upb-db-data:
