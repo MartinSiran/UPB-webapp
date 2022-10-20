@@ -21,14 +21,14 @@ ENV NODE_ENV development
 CMD ["npm", "run", "start"]
 
 # Production build stage
-FROM common-build-stage as prod
+FROM common-build-stage as build
 
 ENV NODE_ENV production
 
 ARG REACT_APP_API_HOST=https://localhost:5000
 RUN npm run build
 
-FROM nginx:1.23.2-alpine
-COPY --from=prod /app/build/ /var/www/
+FROM nginx:1.21.0-alpine as prod
+COPY --from=build /app/build/ /var/www/
 COPY ./nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
