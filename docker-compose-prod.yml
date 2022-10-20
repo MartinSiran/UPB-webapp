@@ -28,7 +28,7 @@ services:
     image: ghcr.io/martinsiran/upb-webapp/fe:latest
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "3000:80"
 
 volumes:
   upb-db-data:
