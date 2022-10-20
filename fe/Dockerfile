@@ -7,6 +7,8 @@ COPY package.json ./
 COPY package-lock.json ./
 RUN npm install
 
+RUN chown -R node:node /app
+
 COPY . ./app
 
 EXPOSE 3000
