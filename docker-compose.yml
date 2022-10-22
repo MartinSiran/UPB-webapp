@@ -10,6 +10,13 @@ services:
     volumes:
       - upb-db-data:/var/lib/mysql
 
+  dbadmin:
+    image: phpmyadmin:5.2.0
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    env_file: dbadmin.env
+
   api:
     depends_on:
       - db
