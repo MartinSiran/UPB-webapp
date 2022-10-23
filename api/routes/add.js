@@ -14,11 +14,6 @@ router.post('/', function(req, res, next) {
     }	
   });
 
-  // let query = `
-	// INSERT INTO reservations 
-	// (title, provider, reservation_time) 
-	// VALUES ("${title}", "${provider}", "${reservation_time}")`;
-
   let query = "INSERT INTO reservations (title, provider, reservation_time) VALUES (?, ?, ?)";
   let values = [title, provider, reservation_time];
 
