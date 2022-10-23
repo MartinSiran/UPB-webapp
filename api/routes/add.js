@@ -3,6 +3,7 @@ const router = express.Router()
 const database = require('../database')
 
 router.post('/', function(req, res, next) {
+  let title = req.body.title;
   let provider = req.body.provider;
   let reservation_time = req.body.reservation_time;
 
@@ -13,12 +14,15 @@ router.post('/', function(req, res, next) {
     }	
   });
 
-  let query = `
-	INSERT INTO reservations 
-	(provider, reservation_time) 
-	VALUES ("${provider}", "${reservation_time}")`;
+  // let query = `
+	// INSERT INTO reservations 
+	// (title, provider, reservation_time) 
+	// VALUES ("${title}", "${provider}", "${reservation_time}")`;
 
-  database.query(query, function(error, data){
+  let query = "INSERT INTO reservations (title, provider, reservation_time) VALUES (?, ?, ?)";
+  let values = [title, provider, reservation_time];
+
+  database.query(query, values,function(error, data){
     if(error){
       throw error;
     }	

@@ -1,7 +1,10 @@
-
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+02:00";
 
 CREATE TABLE `reservations` (
   `id` int NOT NULL,
+  `title` varchar(64) NOT NULL,
   `provider` varchar(32) DEFAULT NULL,
   `published` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `reservation_time` datetime NOT NULL
