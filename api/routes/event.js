@@ -19,7 +19,7 @@ router.post('/', function(req, res, next) {
 
   database.query(query, values,function(error, data){
     if(error){
-      throw error;
+      return res.sendStatus(500);
     }	
     else{
       res.redirect("/");
@@ -32,7 +32,7 @@ router.get('/', function(req, res, next) {
   let query = "SELECT * FROM events";
   database.query(query, function(error, data) {
     if (error) {
-      throw error;
+      return res.sendStatus(500);
     }
     else{
       return res.send(data); 
