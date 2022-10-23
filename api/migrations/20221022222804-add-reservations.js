@@ -34,8 +34,6 @@ exports.up = function(db) {
 };
 
 exports.down = function(db) {
-  console.log("adad");
-
   var filePath = path.join(__dirname, 'sqls', '20221022222804-add-reservations-down.sql');
   return new Promise( function( resolve, reject ) {
     fs.readFile(filePath, {encoding: 'utf-8'}, function(err,data){
