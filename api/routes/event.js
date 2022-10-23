@@ -28,4 +28,17 @@ router.post('/', function(req, res, next) {
 	});
 });
 
+router.get('/', function(req, res, next) {
+  let query = "SELECT * FROM reservations";
+  database.query(query, function(error, data) {
+    if (error) {
+      throw error;
+    }
+    else{
+      return res.send(data); 
+    }
+  });  
+});
+
+
 module.exports = router;
