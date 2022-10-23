@@ -1,2 +1,2 @@
 /* Replace with your SQL commands */
-DROP TABLE `reservations`;
+DROP TABLE `events`;
