@@ -19,7 +19,7 @@ const CryptoForm = (props) => {
         }
     }
     axios.post(`${process.env.REACT_APP_API_HOST}/${props.action}`, formData).then((res) => {
-      console.log.apply(res)
+      console.log(res)
     })
   }
 
