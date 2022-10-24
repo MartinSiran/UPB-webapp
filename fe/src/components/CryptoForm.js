@@ -6,21 +6,6 @@ import Button from 'react-bootstrap/Button';
 
 const CryptoForm = (props) => {
 
-  const downloadFile = (file) => {
-    // using Java Script method to get PDF file
-    fetch(file).then(response => {
-        response.blob().then(blob => {
-            // Creating new object of PDF file
-            const fileURL = window.URL.createObjectURL(blob);
-            // Setting various property values
-            let alink = document.createElement('a');
-            alink.href = fileURL;
-            alink.download = file;
-            alink.click();
-        })
-    })
-}
-
   const handleCrypto = (event) => {
     event.preventDefault()
     const formData = new FormData()
@@ -33,8 +18,12 @@ const CryptoForm = (props) => {
     }
 
     axios.post(`${process.env.REACT_APP_API_HOST}/${props.action}`, formData).then((res) => {
-      console.log(res)
-      downloadFile(res)
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'export.enc');
+      document.body.appendChild(link);
+      link.click();
     })
   }
 
