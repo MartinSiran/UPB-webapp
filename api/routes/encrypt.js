@@ -4,12 +4,18 @@ let encrypt = require('../crypto/encrypt')
 
 
 router.post('/', function(req, res, next) {
-  console.log(req.files.file)
   // res.send(req.files);
-
   let file = req.files.file;
+  let key = req.files.key
+
   file.mv('./uploads/' + file.name);
-  let authData = encrypt.encrypt({ file: '../app/uploads/'+file.name,  publicKey: ''})
+  let authData;
+  if(key !== undefined){
+    key.mv('./uploads/' + key.name);
+    authData = encrypt.encrypt({ file: '../app/uploads/'+file.name,  publicKey: '../app/uploads/'+key.name})
+  }else{
+    authData = encrypt.encrypt({ file: '../app/uploads/'+file.name,  publicKey: ''})
+  }
   // //Use the mv() method to place the file in the upload directory (i.e. "uploads")
   
   res.send(authData)

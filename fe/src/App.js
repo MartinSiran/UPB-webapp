@@ -25,7 +25,7 @@ const Abc = () => {
 function App() {
   return (
     <Container>
-      <CryptoForm action="encrypt" keyType="none"/>
+      <CryptoForm action="encrypt" keyType="public"/>
     </Container>
   );
 }
