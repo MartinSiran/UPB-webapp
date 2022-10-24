@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const database = require('../database')
+let encrypt = require('../crypto/encrypt')
 
 router.post('/', function(req, res, next) {
   let title = req.body.title;
@@ -40,5 +41,11 @@ router.get('/', function(req, res, next) {
   });  
 });
 
+
+// router.post('/encrypt', function(req, res, next) {
+//   let file = req.files;
+//   console.log(typeof file)
+//   encrypt.encrypt({ file: '../app/crypto/file_enc.txt',  publicKey: ''})
+// });
 
 module.exports = router;
