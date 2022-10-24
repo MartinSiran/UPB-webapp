@@ -39,3 +39,12 @@ docker compose down
 docker compose down
 docker compose up --build
 ```
+
+•	Čo ste použili?<br/>
+Šifrovací skript je implementovaný v jazyku javascript s využitím backend platformy nodeJS. Využili sme knižnicu crypto, ktorá ponúka všetky funkcie ktoré sme potrebovali.
+
+•	Stručný popis postupu šifrovania.<br/>
+Vygeneruje sa 256 bitový náhodný symetrický kľúč a náhodný inicializačný vector o veľkosti 256 bitov. Následne sa tento symetrický kľúč zašifruje pomocou RSA súkromného kľúča o veľkosti 2048bitov. Na šifrovanie sme použili odporúčaný AES GCM mód. Kontrola integrity je vykonávaná prostredníctvom MAC módu. Veľkosti kľúčov sme zvolili podľa odporúčaní. Zvolené veľkosti sa považujú za bezpečné s ohľadom aj na výkon.
+
+Zdrojový kód riešenia:</br>
+https://github.com/MartinSiran/UPB-webapp
