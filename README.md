@@ -48,3 +48,6 @@ Vygeneruje sa 256 bitový náhodný symetrický kľúč a náhodný inicializač
 
 Zdrojový kód riešenia:</br>
 https://github.com/MartinSiran/UPB-webapp
+
+## lokalne pouzitie
+stiahnite si podpriecinok crypto alebo subor crypto.zip, v nom pomocou prikazu `node encrypt` alebo `node decrypt` spustite sifrovanie/desifrovanie
