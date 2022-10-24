@@ -22,7 +22,7 @@ router.post('/', function(req, res, next) {
       return res.sendStatus(500);
     }	
     else{
-      res.redirect("/");
+      res.send(`Event with id=${data.insertId} created.`);
     }
 
 	});
