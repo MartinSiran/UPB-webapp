@@ -40,8 +40,8 @@ module.exports = {
       encryptedData: encryptedData,
     }
     // only for testing
-    decrypt(authData)
-
+    // decrypt(authData)
+    fs.writeFileSync('/app/uploads/file.enc', authData.encryptedData)
     return authData
   } catch (err) {
     console.log(err)

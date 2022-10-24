@@ -16,9 +16,7 @@ router.post('/', function(req, res, next) {
   }else{
     authData = encrypt.encrypt({ file: '../app/uploads/'+file.name,  publicKey: ''})
   }
-  // //Use the mv() method to place the file in the upload directory (i.e. "uploads")
-  
-  res.send(authData)
+  res.download('/app/uploads/file.enc')
 });
 
 module.exports = router;
