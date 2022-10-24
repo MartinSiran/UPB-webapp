@@ -3,23 +3,10 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
-const mysql = require('mysql2');
-
-const con = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
-});
-
-
-con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-});
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const eventsRouter = require('./routes/event');
 
 const app = express();
 
@@ -32,5 +19,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/events', eventsRouter);
 
 module.exports = app;
