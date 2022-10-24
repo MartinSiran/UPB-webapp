@@ -1,3 +1,4 @@
+
 const crypto = require('crypto')
 const path = require('path')
 const fs = require('fs')
@@ -5,12 +6,14 @@ const decrypt = require('./decrypt')
 const asymmetricEncrypt = require('./asymmetricEncrypt')
 
 // Encryption Script
-export default function encrypt({ file, publicKey }) {
+module.exports = {
+  encrypt: function({file, publicKey}){
+// export default function encrypt({ file, publicKey }) {
   try {
     console.log("encrypt function...")
     const secretKey = crypto.randomBytes(32)
-    
-    publicKey = fs.readFileSync('./public_key.pem', "utf8")
+
+    publicKey = fs.readFileSync('/app/crypto/public_key.pem', "utf8")
     const encryptedSecretKey = asymmetricEncrypt(secretKey, publicKey)
 
     const initVect = crypto.randomBytes(16)
@@ -37,9 +40,12 @@ export default function encrypt({ file, publicKey }) {
 
     return authData
   } catch (err) {
+    console.log(err)
     return { error: err }
   }
 }
+}
 
 
-encrypt({ file: './file_enc.txt',  publicKey: ''})
+
+// encrypt({ file: './file_enc.txt',  publicKey: ''})

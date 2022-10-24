@@ -6,7 +6,7 @@ const asymmetricDecrypt = require('./asymmetricDecrypt')
 module.exports = function ({ encryptedData, encryptedSecretKey, authTag, initVect, privateKey }) {
   try {
     console.log('decrypt function...')
-    privateKey = fs.readFileSync('./private_key.pem', "utf8")
+    privateKey = fs.readFileSync('/app/crypto/private_key.pem', "utf8")
     const secretKey = asymmetricDecrypt(encryptedSecretKey, privateKey)
 
     const decipher = crypto.createDecipheriv('aes-256-gcm', secretKey, initVect)
