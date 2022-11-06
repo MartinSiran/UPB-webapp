@@ -2,6 +2,7 @@ import React from 'react'
 import Button from 'react-bootstrap/Button';
 import {useState} from 'react';
 import { render } from 'react-dom';
+import axios from 'axios';
 
 function Form() {
 
@@ -71,6 +72,22 @@ function Form() {
         setVal({
             postVal : ""
         });
+
+        sendToDatabase();
+    }
+
+    function sendToDatabase(){
+        axios.post('/events', {
+            event_time: date.startDate,
+            title: serv.service,
+            provider: "a"
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
 
     return (
