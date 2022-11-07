@@ -13,6 +13,9 @@ import {
 }
 from 'mdb-react-ui-kit'
 import axios from 'axios'
+import PasswordChecklist from "react-password-checklist"
+import Alert from 'react-bootstrap/Alert';
+
 
 
 const Registration = () => {
@@ -22,9 +25,14 @@ const Registration = () => {
   const [registrationLastName, setRegistrationLastName] = useState('');
   const [registrationUsername, setRegistrationUsername] = useState('');
   const [registrationPassword, setRegistrationPassword] = useState('');
+  const [registrationPasswordAgain, setRegistrationPasswordAgain] = useState('');
 
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+
+  const [disablePassword, setDisablePassword] = useState(true)
+  const [isPasswordCommon, setIsPasswordCommon] = useState(false)
+
 
 
   const handleJustifyClick = (value) => {
@@ -35,18 +43,28 @@ const Registration = () => {
     setJustifyActive(value)
   }
 
-  const registerAccount = () => {
-    console.log('Register: ' + registrationFirstName, registrationLastName, registrationUsername, registrationPassword)
-    
-    axios.post(`${process.env.REACT_APP_API_HOST}/register`, registrationPassword).then((res) => {
-      const url = window.URL.createObjectURL(new Blob([res.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'export.enc');
-      document.body.appendChild(link);
-      link.click();
+  const registerUser = () => {
+    axios.post(`${process.env.REACT_APP_API_HOST}/register`, 
+    {
+      password: registrationPassword
+    }
+    ).then((res) => {
+      setIsPasswordCommon(res.data.hash)
+      console.log('Is password from commonPasswordList? : ' + res.data.isPasswordCommon)
     })
   }
+
+  const loginUser = () => {
+    axios.post(`${process.env.REACT_APP_API_HOST}/login`, 
+    {
+      username: loginUsername,
+      password: loginPassword
+    }
+    ).then((res) => {
+      console.log('Is user authenticated? : ' + res.data.isAuthenticated)
+    })
+  }
+  
 
   return (
     <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
@@ -71,10 +89,11 @@ const Registration = () => {
             <h4 className='mb-3'>Login form:</h4>
           </div>
 
-          <MDBInput wrapperClass='mb-4' label='Email' id='form1' type='email'
+          <MDBInput wrapperClass='mb-4' label='Username' id='form1' type='email'
           onChange={(e) => setLoginUsername(e.target.value)}/>
-          <MDBInput wrapperClass='mb-4' label='Username' id='form2' type='password'
+          <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password'
           onChange={(e) => setLoginPassword(e.target.value)}/>
+          <MDBBtn className="mb-4 w-100" onClick={loginUser}>Sign in</MDBBtn>
         </MDBTabsPane>
 
         <MDBTabsPane show={justifyActive === 'tab2'}>
@@ -83,13 +102,34 @@ const Registration = () => {
           </div>
           <MDBInput wrapperClass='mb-4' label='First name' type='text'
           onChange={(e) => setRegistrationFirstName(e.target.value)}/>
-          <MDBInput wrapperClass='mb-4' label='Last name' id='form1' type='text' 
+          <MDBInput wrapperClass='mb-4' label='Last name'  type='text' 
           onChange={(e) => setRegistrationLastName(e.target.value)}/>
-          <MDBInput wrapperClass='mb-4' label='Username' id='form1' type='text'
+          <MDBInput wrapperClass='mb-4' label='Username' type='text'
           onChange={(e) => setRegistrationUsername(e.target.value)}/>
-          <MDBInput wrapperClass='mb-4' label='Password' id='form1' type='password'
+          <MDBInput wrapperClass='mb-4' label='Password' type='password'
           onChange={(e) => setRegistrationPassword(e.target.value)}/>
-          <MDBBtn className="mb-4 w-100" onClick={registerAccount}>Sign up</MDBBtn>
+          <MDBInput wrapperClass='mb-4' label='Password again' type='password'
+          onChange={(e) => setRegistrationPasswordAgain(e.target.value)}/>
+          <PasswordChecklist
+            rules={["minLength","specialChar","number","capital","match","lowercase"]}
+            minLength={8}
+            value={registrationPassword}
+            valueAgain={registrationPasswordAgain}
+            onChange={(isValid) => {
+              if (isValid) {
+                setDisablePassword(false)
+              } else {
+                setDisablePassword(true)
+              }
+            }}
+          />
+          { 
+            isPasswordCommon &&           
+            <Alert key="danger" variant="danger">
+              This is danger alert—check it out!
+            </Alert>
+          }
+          <MDBBtn disabled={disablePassword} className="mb-4 w-100" onClick={registerUser}>Sign up</MDBBtn>
         </MDBTabsPane>
 
       </MDBTabsContent>

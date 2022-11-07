@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 import Container from 'react-bootstrap/Container'
 import CryptoForm from './components/CryptoForm'
+import Registration from './components/Registration'
 
 const Abc = () => {
   const [res, setRes] = useState("")
@@ -25,7 +26,8 @@ const Abc = () => {
 function App() {
   return (
     <Container>
-      <CryptoForm action="encrypt" keyType="public"/>
+      {/* <CryptoForm action="encrypt" keyType="public"/> */}
+      <Registration/>
     </Container>
   );
 }
