@@ -26,6 +26,7 @@ function App() {
   return (
     <Container>
       <CryptoForm action="encrypt" keyType="public"/>
+      <CryptoForm action="decrypt" keyType="private"/>
     </Container>
   );
 }
