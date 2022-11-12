@@ -12,17 +12,12 @@ module.exports = function ({ encryptedData, encryptedSecretKey, authTag, initVec
     decipher.setAuthTag(authTag)
     const bufferFile = encryptedData
 
-    // console.log("BufferENCRFile: " + bufferFile)
-
     const decryptedData = Buffer.concat([
       decipher.update(bufferFile),
       decipher.final(),
     ])
 
     console.log('Decrypted data: ' + decryptedData)
-    // fs.writeFile('/app/uploads/file.dec', decryptedData, (err) => {
-    //   if (err) throw err;
-    // })
     return decryptedData
   } catch (err) {
     console.log("ERROR: " + err)

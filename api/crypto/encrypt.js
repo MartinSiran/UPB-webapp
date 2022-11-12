@@ -8,15 +8,9 @@ const asymmetricEncrypt = require('./asymmetricEncrypt')
 // Encryption Script
 module.exports = {
   encrypt: function({file, publicKey}){
-// export default function encrypt({ file, publicKey }) {
   try {
     console.log("encrypt function...")
     const secretKey = crypto.randomBytes(32)
-    // if(publicKey=== ''){
-    //   publicKey = fs.readFileSync('/app/crypto/public_key.pem', "utf8")
-    // }else{
-    //   publicKey = fs.readFileSync(publicKey, "utf8")
-    // }
 
     const encryptedSecretKey = asymmetricEncrypt(secretKey, publicKey)
     const initVect = crypto.randomBytes(16)
@@ -29,8 +23,6 @@ module.exports = {
       cipher.final(),
     ])
 
-    // console.info('Encrypted data: ' + encryptedData)
-
     const authTag = cipher.getAuthTag()
     const authData = {
       encryptedSecretKey: encryptedSecretKey,
@@ -39,11 +31,7 @@ module.exports = {
       encryptedData: encryptedData
     }
     // only for testing
-    decrypt(authData)
-    // fs.writeFile('/app/uploads/file.enc', JSON.stringify(authData), (err) => {
-    //   if (err) throw err;
-    //   console.log(JSON.stringify(authData) + "done!")
-    // })
+    // decrypt(authData)
     return authData
   } catch (err) {
     console.log(err)
@@ -51,7 +39,3 @@ module.exports = {
   }
 }
 }
-
-
-
-// encrypt({ file: './file_enc.txt',  publicKey: ''})
