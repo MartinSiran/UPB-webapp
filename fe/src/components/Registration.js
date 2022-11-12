@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import {
   MDBContainer,
   MDBTabs,
@@ -15,6 +15,7 @@ from 'mdb-react-ui-kit'
 import axios from 'axios'
 import PasswordChecklist from "react-password-checklist"
 import Alert from 'react-bootstrap/Alert';
+import {Link, Redirect, useNavigate} from 'react-router-dom';
 
 
 
@@ -32,6 +33,8 @@ const Registration = () => {
 
   const [disablePassword, setDisablePassword] = useState(true)
   const [isPasswordCommon, setIsPasswordCommon] = useState(false)
+
+  const [loginStatus, setLoginStatus] = useState(true);
 
 
 
@@ -58,19 +61,34 @@ const Registration = () => {
   }
 
   const loginUser = () => {
-    axios.post(`${process.env.REACT_APP_API_HOST}/login`, 
-    {
-      username: loginUsername,
-      password: loginPassword
+    if(loginUsername !== "" && loginPassword!== ""){
+      axios.post(`${process.env.REACT_APP_API_HOST}/login`, 
+      {
+        username: loginUsername,
+        password: loginPassword
+      }
+      ).then((res) => {
+        console.log('Is user authenticated? : ' + res.data)
+      })
     }
-    ).then((res) => {
-      console.log('Is user authenticated? : ' + res.data.isAuthenticated)
-    })
   }
+
+  let navigate = useNavigate();
   
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_HOST}/login`).then(res => {
+      if(res.data.loggedIn == true){
+        setLoginStatus(true)
+        navigate("/logged")
+      }else{
+        setLoginStatus(false)
+      }
+    })
+  }, [])
 
   return (
-    <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
+    <div>
+    {loginStatus==false && <MDBContainer className="p-3 my-5 d-flex flex-column w-50">
 
       <MDBTabs pills justify className='mb-3 d-flex flex-row justify-content-between'>
         <MDBTabsItem>
@@ -96,7 +114,7 @@ const Registration = () => {
           onChange={(e) => setLoginUsername(e.target.value)}/>
           <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password'
           onChange={(e) => setLoginPassword(e.target.value)}/>
-          <MDBBtn className="mb-4 w-100" onClick={loginUser}>Sign in</MDBBtn>
+          <MDBBtn className="mb-4 w-100" onClick={loginUser}>Sign in</MDBBtn>  
         </MDBTabsPane>
 
         <MDBTabsPane show={justifyActive === 'tab2'}>
@@ -132,11 +150,19 @@ const Registration = () => {
               This is danger alert—check it out!
             </Alert>
           }
+          { 
+            isPasswordCommon == null &&           
+            <Alert key="danger" variant="danger">
+              Username already used!
+            </Alert>
+          }
+     
           <MDBBtn disabled={disablePassword} className="mb-4 w-100" onClick={registerUser}>Sign up</MDBBtn>
         </MDBTabsPane>
 
       </MDBTabsContent>
-    </MDBContainer>
+    </MDBContainer>}
+    </div>
   )
 }
 
