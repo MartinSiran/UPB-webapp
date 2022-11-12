@@ -46,6 +46,9 @@ const Registration = () => {
   const registerUser = () => {
     axios.post(`${process.env.REACT_APP_API_HOST}/register`, 
     {
+      firstname: registrationFirstName,
+      lastname: registrationLastName,
+      username: registrationUsername,
       password: registrationPassword
     }
     ).then((res) => {
