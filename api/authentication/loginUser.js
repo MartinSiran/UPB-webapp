@@ -5,8 +5,7 @@ module.exports = {
   comparePassword: async function(body){
   let hash = await queryHash(body.username);
   // const hash = GetFromDB    //get Hash from DB
-  
-  console.log(hash)
+ 
 
   const isAuthenticated = bcrypt
     .compare(body.password, hash)
@@ -27,11 +26,9 @@ function queryHash(username){
 
     database.query(query, values,function(error, data){
       if(error){
-        console.log("not")
         console.log(error);
         reject(error);
       }	
-      console.log("ok")
       let hash = data[0].password
       resolve(hash)
     });

@@ -10,23 +10,31 @@ CREATE TABLE `events` (
   `event_time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Kľúče pre exportované tabuľky
---
 
---
--- Indexy pre tabuľku `reservations`
---
+CREATE TABLE `users` (
+  `id` int NOT NULL,
+  `lastname` varchar(100) NOT NULL,
+  `firstname` varchar(100) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
 ALTER TABLE `events`
   ADD PRIMARY KEY (`id`);
 
---
--- AUTO_INCREMENT pre exportované tabuľky
---
+  
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
 
---
--- AUTO_INCREMENT pre tabuľku `reservations`
---
+
 ALTER TABLE `events`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+
+ALTER TABLE `users`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
 COMMIT;
+
+

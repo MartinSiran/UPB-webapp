@@ -5,7 +5,6 @@ const loginUser = require('../authentication/loginUser')
 
 router.post('/', async function(req, res, next) {
   const isAuthenticated = await loginUser.comparePassword(req.body)
-  console.log("asas")
   if (isAuthenticated){ 
     console.log(req.sessionID)
     session=req.session;
@@ -19,16 +18,18 @@ router.post('/', async function(req, res, next) {
 
 router.get('/logout',(req,res) => {
   req.session.destroy();
-  res.redirect('/');
+  res.send({loggedIn: false})
 });
 
 router.get('/', function(req, res, next) {
   session = req.session;
   console.log(session.userid)
   if(session.userid){
-    res.send("Welcome User")
+    // res.send("Welcome User")
+    res.send({loggedIn: true, user: session.userid})
   }else{
-    res.send(`Newelcome`);
+    // res.send(`Newelcome`);
+    res.send({loggedIn: false})
   }
 });
 
