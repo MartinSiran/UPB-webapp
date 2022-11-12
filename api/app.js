@@ -12,8 +12,14 @@ const encryptRouter = require('./routes/encrypt');
 const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
 
-
+const session = require('express-session')
 const app = express();
+
+app.use(session({
+    secret: 'secret',
+    cookie: {maxAge: 30000},
+    saveUninitialized: true
+}));
 
 app.use(logger('dev'));
 app.use(cors());
