@@ -32,11 +32,11 @@ const CryptoForm = (props) => {
       <Form onSubmit={handleCrypto}>
         <Form.Group controlId="fileToCrypt" className="mb-3">
           <Form.Label>Upload file to {props.action}</Form.Label>
-          <Form.Control type="file" />
+          <Form.Control type="file" required/>
         </Form.Group>
         { (["public", "private"].some(element => props.keyType.includes(element))) &&
         <Form.Group controlId="cipherKey" className="mb-3">
-          <Form.Label>Upload {props.keyType} key</Form.Label>
+          <Form.Label>Upload {props.keyType} key (if not specified, default key from server will be used)</Form.Label>
           <Form.Control type="file" />
         </Form.Group>
         }
