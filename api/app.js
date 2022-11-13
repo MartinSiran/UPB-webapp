@@ -12,11 +12,21 @@ const encryptRouter = require('./routes/encrypt');
 const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
 
-
+const session = require('express-session')
 const app = express();
 
+app.use(session({
+    secret: 'secret',      //TODO hard
+    cookie: {maxAge: 30000},
+    saveUninitialized: false
+}));
+
 app.use(logger('dev'));
-app.use(cors());
+app.use(cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST"],
+    credentials: true
+})); //TODO
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
