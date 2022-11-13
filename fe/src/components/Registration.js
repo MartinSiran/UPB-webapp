@@ -15,7 +15,7 @@ from 'mdb-react-ui-kit'
 import axios from 'axios'
 import PasswordChecklist from "react-password-checklist"
 import Alert from 'react-bootstrap/Alert';
-
+import SessionTimeout from '../SessionTimeout';
 
 
 const Registration = () => {
@@ -29,11 +29,15 @@ const Registration = () => {
 
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
-
+  const [isAuthenticated, setAuth] = useState(false);
+  let button;
   const [disablePassword, setDisablePassword] = useState(true)
   const [isPasswordCommon, setIsPasswordCommon] = useState(false)
 
-
+  const handleClick = () => {
+    loginUser()
+    setAuth(!isAuthenticated);
+  }
 
   const handleJustifyClick = (value) => {
     if (value === justifyActive) {
@@ -55,6 +59,7 @@ const Registration = () => {
   }
 
   const loginUser = () => {
+
     axios.post(`${process.env.REACT_APP_API_HOST}/login`, 
     {
       username: loginUsername,
@@ -93,7 +98,11 @@ const Registration = () => {
           onChange={(e) => setLoginUsername(e.target.value)}/>
           <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password'
           onChange={(e) => setLoginPassword(e.target.value)}/>
-          <MDBBtn className="mb-4 w-100" onClick={loginUser}>Sign in</MDBBtn>
+          <MDBBtn className="mb-4 w-100"  onClick={handleClick}>Sign in</MDBBtn>
+        
+          <SessionTimeout isAuthenticated={isAuthenticated} logOut={handleClick} />
+       
+
         </MDBTabsPane>
 
         <MDBTabsPane show={justifyActive === 'tab2'}>
