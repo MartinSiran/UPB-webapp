@@ -69,6 +69,14 @@ const Registration = () => {
       }
       ).then((res) => {
         console.log('Is user authenticated? : ' + res.data)
+        axios.get(`${process.env.REACT_APP_API_HOST}/login`).then(res => {
+          if(res.data.loggedIn == true){
+            setLoginStatus(true)
+            navigate("/logged")
+          }else{
+            setLoginStatus(false)
+          }
+        })
       })
     }
   }
