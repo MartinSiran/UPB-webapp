@@ -29,8 +29,14 @@ function queryHash(username){
         console.log(error);
         reject(error);
       }	
-      let hash = data[0].password
-      resolve(hash)
+      
+      if(data && data.length > 0){
+        let hash = data[0].password
+        resolve(hash)
+      }else{
+        // let hash = "";
+        reject(error);
+      }
     });
   })
   
