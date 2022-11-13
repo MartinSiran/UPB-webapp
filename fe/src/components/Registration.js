@@ -34,6 +34,8 @@ const Registration = () => {
   let button;
   const [disablePassword, setDisablePassword] = useState(true)
   const [isPasswordCommon, setIsPasswordCommon] = useState(false)
+  const [isCreated, setIsCreated] = useState(null)
+
 
   const [loginStatus, setLoginStatus] = useState(true);
   const handleClick = () => {
@@ -59,7 +61,8 @@ const Registration = () => {
     }
     ).then((res) => {
       setIsPasswordCommon(res.data.hash)
-      console.log('Is password from commonPasswordList? : ' + res.data.isPasswordCommon)
+      setIsCreated(res.data.isPasswordCommon.isCreated)
+      console.log('Is password from commonPasswordList? : ' + res.data.isPasswordCommon.commonPass)
     })
   }
 
@@ -162,13 +165,19 @@ const Registration = () => {
           { 
             isPasswordCommon &&           
             <Alert key="danger" variant="danger">
-              This is danger alert—check it out!
+              This is danger alert—check it out! alebo username already exist!
             </Alert>
           }
           { 
-            isPasswordCommon == null &&           
+            isCreated &&           
+            <Alert key="success" variant="success">
+              Registration completed!
+            </Alert>
+          }
+          { 
+            isCreated==false &&           
             <Alert key="danger" variant="danger">
-              Username already used!
+              Username already exist!
             </Alert>
           }
      
