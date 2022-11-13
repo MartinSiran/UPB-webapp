@@ -9,6 +9,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const eventsRouter = require('./routes/event');
 const encryptRouter = require('./routes/encrypt');
+const decryptRouter = require('./routes/decrypt');
 const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
 
@@ -40,6 +41,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/events', eventsRouter);
 app.use('/encrypt', encryptRouter);
+app.use('/decrypt', decryptRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
 
