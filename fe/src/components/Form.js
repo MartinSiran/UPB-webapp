@@ -77,7 +77,7 @@ function Form() {
     }
 
     function sendToDatabase(){
-        axios.post('/events', {
+        axios.post(`${process.env.REACT_APP_API_HOST}/events`, {
             event_time: date.startDate,
             title: serv.service,
             provider: "a"
