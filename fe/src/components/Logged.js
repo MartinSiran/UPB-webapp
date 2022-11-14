@@ -4,6 +4,7 @@ import PasswordChecklist from "react-password-checklist"
 import Alert from 'react-bootstrap/Alert';
 import {useNavigate, Link} from 'react-router-dom';
 import SharedFiles from './SharedFiles';
+import CryptoForm from './CryptoForm'
 
 
 
@@ -28,9 +29,12 @@ const Logged = () => {
 
   return (
     <div>
-      <p>Ahoj {loggedUser}</p>
+      <p>Logged as {loggedUser} <Link onClick={logUserOut}  to="/">Logout</Link></p>
       <SharedFiles userId={loggedUserId}/>
-      <Link onClick={logUserOut}  to="/">Logout</Link>
+      <h1>Encrypting</h1>
+      <CryptoForm action="encrypt" keyType="public"/>
+      <h1>Decrypting</h1>
+      <CryptoForm action="decrypt" keyType="private"/>
     </div>
   )
 }
