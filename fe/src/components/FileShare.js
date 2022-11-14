@@ -2,33 +2,40 @@ import React from 'react'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
-import {useState} from 'react';
+import {useState,useEffect} from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
 
 function FileShare() {
 
-
-    // const [startDate, setStartDate] = useState('');
-
-    // const [service, setService] = useState('');
-
-    let displayData = [];
-
-    let selectData =  ["a"];
-
-
-    let getUsers = () =>{
+    const getUsers = () =>{
         axios.get(`${process.env.REACT_APP_API_HOST}/users`, {
         })
         .then(function (response) {
           console.log(response.data[0]["username"]);
-          selectData = response.data[0]["username"];
+          return response.data
         })
         .catch(function (error) {
           console.log(error);
         });;
     }
+
+    // const [startDate, setStartDate] = useState('');
+
+    const [selectData, setSelectData] = useState([]);
+
+    let displayData = [];
+    const path = `${process.env.REACT_APP_API_HOST}/users/`
+
+
+    useEffect(() => {
+        axios.get(path).then(res => {
+            console.log(res.data.map(e=>({name: e.username, id:e.id})))
+            setSelectData(res.data.map(e=>({name: e.username, id:e.id})))
+        })
+    }, [])
+
+
 
     // window.onload = () => {
     //     console.log("now");
@@ -55,9 +62,8 @@ function FileShare() {
                         <Form.Group className="mb-3">
                             <Form.Label>Select users to share with:</Form.Label>
                             <DropdownMultiselect
-                                onClick={getUsers} 
                                 options={selectData}
-                                name="countries"
+                                displayValue="name"
                             />
                         </Form.Group>
                         </div>

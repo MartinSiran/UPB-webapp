@@ -5,6 +5,7 @@ import Alert from 'react-bootstrap/Alert';
 import {useNavigate, Link} from 'react-router-dom';
 import SharedFiles from './SharedFiles';
 import CryptoForm from './CryptoForm'
+import FileShare from './FileShare';
 
 
 
@@ -30,6 +31,7 @@ const Logged = () => {
   return (
     <div>
       <p>Logged as {loggedUser} <Link onClick={logUserOut}  to="/">Logout</Link></p>
+      <FileShare/>
       <SharedFiles userId={loggedUserId}/>
       <h1>Encrypting</h1>
       <CryptoForm action="encrypt" keyType="public"/>
