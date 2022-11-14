@@ -10,6 +10,9 @@ function generateKeys () {
   const privateKey = pair.private
   const publicKey = pair.public
 
+  console.log(pair)
+  return pair
+
   fs.writeFile('public_key.pem', publicKey, (err) => {
     if (err) {
       throw err;
@@ -25,4 +28,4 @@ function generateKeys () {
   })
 }
 
-generateKeys()
+module.exports = {generateKeys: generateKeys}

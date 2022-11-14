@@ -1,9 +1,20 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const database = require('../database')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send(`respond with a CCCC ${process.env.DB_NAME} hhhhh`);
+  let query = "SELECT id, username FROM users";
+
+  database.query(query, function(error, data) {
+    if(error){
+      return res.sendStatus(500);
+    }
+    else{
+      res.send(data);
+    }
+
+	});
 });
 
 module.exports = router;

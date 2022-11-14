@@ -4,8 +4,6 @@ const database = require ('../database')
 module.exports = {
   comparePassword: async function(body){
   let hash = await queryHash(body.username);
-  // const hash = GetFromDB    //get Hash from DB
- 
 
   const isAuthenticated = bcrypt
     .compare(body.password, hash)
@@ -15,8 +13,6 @@ module.exports = {
     .catch(err => console.log('Error: ' + err))
     return isAuthenticated
   }
-        
-  // const hash = '$2a$10$LEn/vWeaQ/KC5Oardqb6kurjmDVOJw0h1mO6SA.ZiheIhBrQEesKG'  
 }
 
 function queryHash(username){
@@ -34,7 +30,6 @@ function queryHash(username){
         let hash = data[0].password
         resolve(hash)
       }else{
-        // let hash = "";
         reject(error);
       }
     });

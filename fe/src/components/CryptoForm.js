@@ -18,9 +18,7 @@ const CryptoForm = (props) => {
     }
 
     axios.post(`${process.env.REACT_APP_API_HOST}/${props.action}`, formData, {responseType: 'blob'}).then((res) => {
-      console.log(res.data)
       const url = URL.createObjectURL(new Blob([res.data]));
-      console.log(url)
       const link = document.createElement('a');
       link.href = url;
       link.setAttribute('download', 'file');
