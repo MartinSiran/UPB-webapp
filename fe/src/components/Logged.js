@@ -28,7 +28,7 @@ const Logged = () => {
 
   return (
     <div>
-      <p>Ahoj {loggedUser} {loggedUserId}</p>
+      <p>Ahoj {loggedUser}</p>
       <SharedFiles userId={loggedUserId}/>
       <Link onClick={logUserOut}  to="/">Logout</Link>
     </div>
