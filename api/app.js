@@ -34,7 +34,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload({
     createParentPath: true,
-    limits: { fileSize: 1024 * 1024 * 1024 }
+    limits: { fileSize: 1024 * 1024 * 1024 },
+    useTempFiles : true,
+    tempFileDir : '/tmp/'
 }));
 
 app.use('/', indexRouter);

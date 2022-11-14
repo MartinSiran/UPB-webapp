@@ -10,13 +10,14 @@ module.exports = {
   encrypt: function({file, publicKey}){
   try {
     console.log("encrypt function...")
+    const bufferFile = fs.readFileSync(file)
+    publicKey = fs.readFileSync(publicKey)
     const secretKey = crypto.randomBytes(32)
 
     const encryptedSecretKey = asymmetricEncrypt(secretKey, publicKey)
     const initVect = crypto.randomBytes(16)
     const cipher = crypto.createCipheriv('aes-256-gcm', secretKey, initVect)
 
-    const bufferFile = file
 
     const encryptedData = Buffer.concat([
       cipher.update(bufferFile),
