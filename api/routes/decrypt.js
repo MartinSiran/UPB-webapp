@@ -1,21 +1,18 @@
-const express = require('express');
-const router = express.Router();
-const decrypt = require('../crypto/decrypt')
-const fs = require('fs')
+var express = require('express');
+var router = express.Router();
+let decrypt = require('../crypto/decrypt')
 
 router.post('/', function(req, res) {
   let file = req.files.file;
   let key = req.files.key
-  console.log(file)
 
-  const fileData = fs.readFileSync(file.tempFilePath)
-  let encryptedData = JSON.parse(fileData);
+  let encryptedData = JSON.parse(file.data);
   encryptedData = {
     encryptedSecretKey: Buffer.from(encryptedData.encryptedSecretKey),
     initVect: Buffer.from(encryptedData.initVect),
     authTag: Buffer.from(encryptedData.authTag),
     encryptedData: Buffer.from(encryptedData.encryptedData),
-    privateKey: fs.readFileSync(key.tempFilePath),
+    privateKey: key.data,
     fileName: file.name
   }
 
