@@ -26,7 +26,7 @@ app.use(session({
 
 app.use(logger('dev'));
 app.use(cors({
-    origin: ["http://localhost:3000"],
+    origin: ["http://teddlab.digital:3000"],
     methods: ["GET", "POST"],
     credentials: true
 })); //TODO
