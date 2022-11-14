@@ -29,7 +29,6 @@ router.post('/', async function(req, res, next) {
     session.userrealid=userId;
     console.log(req.session)
   }
-  // res.send({ isAuthenticated });
   res.redirect('/');
 
 });
@@ -43,10 +42,8 @@ router.get('/', function(req, res, next) {
   session = req.session;
   console.log(session.userid)
   if(session.userid){
-    // res.send("Welcome User")
     res.send({loggedIn: true, user: session.userid, userId: session.userrealid})
   }else{
-    // res.send(`Newelcome`);
     res.send({loggedIn: false})
   }
 });

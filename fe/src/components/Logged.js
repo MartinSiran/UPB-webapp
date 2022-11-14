@@ -18,13 +18,9 @@ const Logged = () => {
   let navigate = useNavigate();
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_HOST}/login`).then(res => {
-      console.log(res)
       if(res.data.loggedIn == false){
-        // setLoginStatus(res.data.user)
-        console.log("zle")
         navigate("/")
       }
-      console.log("mmmm", res.data)
       setLoggedUser(res.data.user)
       setLoggedUserId(res.data.userId)
     })

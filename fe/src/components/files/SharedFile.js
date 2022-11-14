@@ -18,7 +18,6 @@ const SharedFile = (props) => {
       tempLink.click();
     })
   }
-  console.log("file", props)
 
   return (
     <Button variant='primary' onClick={downloadFile}>file</Button>
