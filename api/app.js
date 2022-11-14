@@ -13,13 +13,14 @@ const decryptRouter = require('./routes/decrypt');
 const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
 const shareRouter = require('./routes/share')
+const filesRouter = require('./routes/files')
 
 const session = require('express-session')
 const app = express();
 
 app.use(session({
     secret: 'secret',      //TODO hard
-    cookie: {maxAge: 30000},
+    cookie: {maxAge: 300000},
     saveUninitialized: false
 }));
 
@@ -46,5 +47,6 @@ app.use('/decrypt', decryptRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
 app.use('/share', shareRouter);
+app.use('/files', filesRouter);
 
 module.exports = app;

@@ -15,7 +15,6 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Registration/>}></Route>
         <Route path='/fileshare' element={<FileShare/>}></Route>
-        <Route path='/crypto' element={<CryptoForm action="encrypt" keyType="public"/>}></Route>
         <Route path='/logged' element={<Logged/>}></Route>
       </Routes>
     </Container>
