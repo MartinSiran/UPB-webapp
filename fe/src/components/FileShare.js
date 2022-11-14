@@ -2,79 +2,85 @@ import React from 'react'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
-import {useState,useEffect} from 'react';
-import { render } from 'react-dom';
+import AsyncSelect from 'react-select/async';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function FileShare() {
 
-    const getUsers = () =>{
-        axios.get(`${process.env.REACT_APP_API_HOST}/users`, {
-        })
-        .then(function (response) {
-          console.log(response.data[0]["username"]);
-          return response.data
-        })
-        .catch(function (error) {
-          console.log(error);
-        });;
+    const handleChange = value => {
+        console.log(value)
     }
 
-    // const [startDate, setStartDate] = useState('');
+    const filterUsers = (inputValue) => {
+        return selectData.filter((i) =>
+            i.label.toLowerCase().includes(inputValue.toLowerCase())
+        );
+    };
+
+    const promiseOptions = (inputValue) =>
+        new Promise ((resolve) => {
+            setTimeout(() => {
+                resolve(filterUsers(inputValue));
+            }, 1000);
+        });
+
+    const getUsers = () => {
+        return axios.get(`${process.env.REACT_APP_API_HOST}/users`).then(res => {
+            return res.data.map(user => ({ key: user.id, label: user.username }))
+        })
+    }
 
     const [selectData, setSelectData] = useState([]);
 
-    let displayData = [];
-    const path = `${process.env.REACT_APP_API_HOST}/users/`
-
-
     useEffect(() => {
-        axios.get(path).then(res => {
-            console.log(res.data.map(e=>({name: e.username, id:e.id})))
-            setSelectData(res.data.map(e=>({name: e.username, id:e.id})))
-        })
+        let ignore = false
+        const getUsers = async () => {
+            const result = await axios.get(`${process.env.REACT_APP_API_HOST}/users`)
+            console.log(result)
+            if (!ignore) {
+                setSelectData(result.data.map(user => ({ key: user.id, label: user.username })))
+            }
+        }
+        getUsers()
+        return () => { ignore = true }
     }, [])
 
 
-
-    // window.onload = () => {
-    //     console.log("now");
-    //     getUsers();
-    // }
-
-    // selectData =  getUsers();
-
     return (
         <>
-            <h1 class="text-center">
-            Share file 
+            <h1 className="text-center">
+                Share file
             </h1>
-            <div class="d-flex justify-content-center mt-5">
-                <div class="d-block">
-                    <div class="d-flex justify-content-start">
-                        <div class="flex">
-                        <Form.Group className="mb-3">
-                            <Form.Label>Upload file to share:</Form.Label>
-                            <Form.Control type="file" required/>
-                        </Form.Group>
+            <p>{JSON.stringify(selectData)}</p>
+            <div className="d-flex justify-content-center mt-5">
+                <div className="d-block">
+                    <div className="d-flex justify-content-start">
+                        <div className="flex">
+                            <Form.Group className="mb-3">
+                                <Form.Label>Upload file to share:</Form.Label>
+                                <Form.Control type="file" required />
+                            </Form.Group>
                         </div>
-                        <div class="d-flex justify-content-end mx-1">
-                        <Form.Group className="mb-3">
-                            <Form.Label>Select users to share with:</Form.Label>
-                            <DropdownMultiselect
-                                options={selectData}
-                                displayValue="name"
-                            />
-                        </Form.Group>
+                        <div className="d-flex justify-content-end mx-1">
+                            <Form.Group className="mb-3">
+                                <Form.Label>Select users to share with:</Form.Label>
+                                <AsyncSelect
+                                    isMulti
+                                    cacheOptions
+                                    defaultOptions
+                                    loadOptions={getUsers}
+                                    onChange={handleChange}
+                                />
+                            </Form.Group>
                         </div>
-                        <div class="d-flex justify-content-center mx-3">
-                            <Button class="primary">Confirm</Button>
+                        <div className="d-flex justify-content-center mx-3">
+                            <Button className="primary">Confirm</Button>
                         </div>
                     </div>
                 </div>
             </div>
         </>
-        
     )
 }
 

@@ -15,7 +15,7 @@ router.post('/', async function(req, res, next) {
 });
 
 router.get('/:userId', function(req, res, next) {
-  console.log(req.params.userId)
+  // console.log(req.params.userId)
   return fileShare.getFilesForUser(res, req.params.userId)
 });
 

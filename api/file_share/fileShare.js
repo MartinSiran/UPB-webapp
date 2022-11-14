@@ -6,7 +6,6 @@ const getFile = (res, fileId) => {
         if (error) {
             return res.sendStatus(500)
         }
-        console.log(data)
         return res.send(data[0].file)
     })
 }
