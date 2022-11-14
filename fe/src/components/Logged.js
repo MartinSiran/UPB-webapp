@@ -3,6 +3,7 @@ import axios from 'axios'
 import PasswordChecklist from "react-password-checklist"
 import Alert from 'react-bootstrap/Alert';
 import {useNavigate, Link} from 'react-router-dom';
+import SharedFiles from './SharedFiles';
 
 
 
@@ -12,6 +13,7 @@ const Logged = () => {
     axios.get(`${process.env.REACT_APP_API_HOST}/login/logout`);
   }
   const [loggedUser, setLoggedUser] = useState('');
+  const [loggedUserId, setLoggedUserId] = useState('');
 
   let navigate = useNavigate();
   useEffect(() => {
@@ -22,18 +24,18 @@ const Logged = () => {
         console.log("zle")
         navigate("/")
       }
+      console.log("mmmm", res.data)
       setLoggedUser(res.data.user)
+      setLoggedUserId(res.data.userId)
     })
   }, [])
 
   return (
     <div>
-    <p>Ahoj {loggedUser}</p>
-    <Link onClick={() => logUserOut()} to="/">Logout</Link>  
+      <p>Ahoj {loggedUser} {loggedUserId}</p>
+      <SharedFiles userId={loggedUserId}/>
+      <Link onClick={logUserOut}  to="/">Logout</Link>
     </div>
-     
-    
-    // <Link  to="/">Logout</Link>      
   )
 }
 
