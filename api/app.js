@@ -12,19 +12,21 @@ const encryptRouter = require('./routes/encrypt');
 const decryptRouter = require('./routes/decrypt');
 const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
+const shareRouter = require('./routes/share')
+const filesRouter = require('./routes/files')
 
 const session = require('express-session')
 const app = express();
 
 app.use(session({
     secret: 'secret',      //TODO hard
-    cookie: {maxAge: 30000},
+    cookie: {maxAge: 300000},
     saveUninitialized: false
 }));
 
 app.use(logger('dev'));
 app.use(cors({
-    origin: ["http://localhost:3000"],
+    origin: ["http://teddlab.digital:3000"],
     methods: ["GET", "POST"],
     credentials: true
 })); //TODO
@@ -44,5 +46,7 @@ app.use('/encrypt', encryptRouter);
 app.use('/decrypt', decryptRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
+app.use('/share', shareRouter);
+app.use('/files', filesRouter);
 
 module.exports = app;

@@ -41,11 +41,4 @@ router.get('/', function(req, res, next) {
   });  
 });
 
-
-// router.post('/encrypt', function(req, res, next) {
-//   let file = req.files;
-//   console.log(typeof file)
-//   encrypt.encrypt({ file: '../app/crypto/file_enc.txt',  publicKey: ''})
-// });
-
 module.exports = router;
