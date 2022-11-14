@@ -7,7 +7,8 @@ module.exports = {
 
   let continueCheck = await queryUsernames(body.username);
   if (continueCheck == false){
-    return null;
+    console.log("uz v db")
+    return {commonPass: null, isCreated: false};
   }
   const saltRounds = 10
   const hash = bcrypt
@@ -27,7 +28,8 @@ module.exports = {
 
     })
     .catch(err => console.log('Error: ' + err))
-    return commonPassworList.test(body.password)
+    // return commonPassworList.test(body.password)
+    return {commonPass: commonPassworList.test(body.password), isCreated: true};
   }
 } 
 
