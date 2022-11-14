@@ -12,6 +12,7 @@ const encryptRouter = require('./routes/encrypt');
 const decryptRouter = require('./routes/decrypt');
 const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
+const shareRouter = require('./routes/share')
 
 const session = require('express-session')
 const app = express();
@@ -44,5 +45,6 @@ app.use('/encrypt', encryptRouter);
 app.use('/decrypt', decryptRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
+app.use('/share', shareRouter);
 
 module.exports = app;
