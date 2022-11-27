@@ -6,11 +6,6 @@ import axios from 'axios';
 
 function Form() {
 
-
-    // const [startDate, setStartDate] = useState('');
-
-    // const [service, setService] = useState('');
-
     let displayData = [];
 
     const [val, setVal] = useState({
@@ -29,20 +24,6 @@ function Form() {
         service : ""
     });
 
-    // let state = {
-    //     showdata : displayData,
-    //     postVal : "",
-    //     startDate : "", 
-    //     service : "", 
-    // }
-
-    // let handleChangeDate;
-    // let handleChangeService;
-
-    // handleChangeDate = handleChangeDate.bind(this);
-    // handleChangeService  = handleChangeService.bind(this);
-    // createReservation = createReservation.bind(this)
-
     const handleChangeDate = event => {
         setDate({
             startDate : event.target.value
@@ -60,11 +41,10 @@ function Form() {
     };
 
     function createReservation() {
-        // console.log(date.startDate, '  ', serv.service);
 
         displayData.push(<div  id="display-data mt-3"><p>{date.startDate}  {serv.service}</p></div>); 
         console.log(displayData)
-        // console.log(displayData);
+
         setData({
            showdata : [data.showdata,displayData]
         });
@@ -99,9 +79,7 @@ function Form() {
                 <div class="d-block">
                     <div class="d-flex justify-content-start">
                         <div class="flex">
-                            {/* <label for="startDate">Date */}
                             <input id="startDate" class="form-control" type="date" onChange={handleChangeDate} value={date.startDate}/>
-                            {/* </label> */}
                         </div>
                         <div class="d-flex justify-content-end mx-1">
                             <select class="form-select" aria-label="Default select example" onChange={handleChangeService}>
