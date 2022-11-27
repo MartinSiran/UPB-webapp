@@ -14,6 +14,7 @@ const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
 const shareRouter = require('./routes/share')
 const filesRouter = require('./routes/files')
+const commentRouter = require('./routes/comment')
 
 const session = require('express-session')
 const app = express();
@@ -26,7 +27,7 @@ app.use(session({
 
 app.use(logger('dev'));
 app.use(cors({
-    origin: ["http://teddlab.digital:3000"],
+    origin: ["http://localhost:3000"],
     methods: ["GET", "POST"],
     credentials: true
 })); //TODO
@@ -48,5 +49,6 @@ app.use('/register', registerRouter);
 app.use('/login', loginRouter);
 app.use('/share', shareRouter);
 app.use('/files', filesRouter);
+app.use('/comment', commentRouter);
 
 module.exports = app;
