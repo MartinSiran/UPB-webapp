@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY package.json ./
 COPY package-lock.json ./
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 RUN mkdir node_modules/.cache && chmod -R 777 node_modules/.cache
 
