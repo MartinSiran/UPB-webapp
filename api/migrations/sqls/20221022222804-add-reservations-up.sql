@@ -16,6 +16,12 @@ CREATE TABLE `files` (
   `file` longblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE `comments` (
+  `id` int NOT NULL,
+  `user` varchar(32) NOT NULL,
+  `comment` varchar(300) NOT NULL,
+  `comment_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `migrations` (
   `id` int NOT NULL,
@@ -51,6 +57,8 @@ ALTER TABLE `migrations`
 
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `user_files`
   ADD PRIMARY KEY (`id`),
@@ -66,6 +74,8 @@ ALTER TABLE `files`
 ALTER TABLE `migrations`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
+ALTER TABLE `comments`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `users`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
