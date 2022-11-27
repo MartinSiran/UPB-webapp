@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const database = require('../database')
+let encrypt = require('../crypto/encrypt')
 
 router.post('/', function(req, res, next) {
   let title = req.body.title;
@@ -39,6 +40,5 @@ router.get('/', function(req, res, next) {
     }
   });  
 });
-
 
 module.exports = router;
