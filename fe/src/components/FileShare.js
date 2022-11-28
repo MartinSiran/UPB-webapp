@@ -1,9 +1,7 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import DropdownMultiselect from "react-multiselect-dropdown-bootstrap";
 import AsyncSelect from 'react-select/async';
-import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function FileShare() {
@@ -12,47 +10,17 @@ function FileShare() {
         console.log(value)
     }
 
-    const filterUsers = (inputValue) => {
-        return selectData.filter((i) =>
-            i.label.toLowerCase().includes(inputValue.toLowerCase())
-        );
-    };
-
-    const promiseOptions = (inputValue) =>
-        new Promise ((resolve) => {
-            setTimeout(() => {
-                resolve(filterUsers(inputValue));
-            }, 1000);
-        });
-
     const getUsers = () => {
         return axios.get(`${process.env.REACT_APP_API_HOST}/users`).then(res => {
-            return res.data.map(user => ({ key: user.id, label: user.username }))
+            return res.data.map(user => ({ value: user.id, label: user.username }))
         })
     }
-
-    const [selectData, setSelectData] = useState([]);
-
-    useEffect(() => {
-        let ignore = false
-        const getUsers = async () => {
-            const result = await axios.get(`${process.env.REACT_APP_API_HOST}/users`)
-            console.log(result)
-            if (!ignore) {
-                setSelectData(result.data.map(user => ({ key: user.id, label: user.username })))
-            }
-        }
-        getUsers()
-        return () => { ignore = true }
-    }, [])
-
 
     return (
         <>
             <h1 className="text-center">
                 Share file
             </h1>
-            <p>{JSON.stringify(selectData)}</p>
             <div className="d-flex justify-content-center mt-5">
                 <div className="d-block">
                     <div className="d-flex justify-content-start">
