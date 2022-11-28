@@ -3,20 +3,23 @@ import React from "react";
 import axios from 'axios';
 import Reservation from './Reservation'
 import Button from 'react-bootstrap/Button';
+import {useState} from 'react';
   
 const ReservationList = () => {
 
     const results = [];
 
-    function getReservations(){
-        axios.get(`${process.env.REACT_APP_API_HOST}/events`)
-          .then(function (response) {
-            // console.log(response.data);
-            return response.data;
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+    async function getReservations(){
+        const response = await axios.get(`${process.env.REACT_APP_API_HOST}/events`);
+
+        // .then(function (response) {
+        //     console.log(response.data);
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
+        return response.data
+
     
     }
 
