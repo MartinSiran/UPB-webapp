@@ -1,8 +1,11 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button';
 import {useState} from 'react';
+import { Link } from "react-router-dom";
 import { render } from 'react-dom';
 import axios from 'axios';
+import ReservationList from './ReservationList'
+import { useNavigate } from "react-router-dom";
 
 function Reservation() {
 
@@ -25,7 +28,7 @@ function Reservation() {
     });
 
     const [prov, setProv] = useState({
-        provider1 : ""
+        provider : ""
     });
 
     const handleChangeDate = event => {
@@ -54,7 +57,7 @@ function Reservation() {
 
     function createReservation() {
 
-        displayData.push(<div  id="display-data mt-3"><p>{prov.provider1} {date.startDate}  {serv.service}</p></div>); 
+        displayData.push(<div  id="display-data mt-3"><p>{prov.provider} {date.startDate}  {serv.service}</p></div>); 
         console.log(displayData)
 
         setData({
@@ -69,16 +72,11 @@ function Reservation() {
     }
 
     function sendToDatabase(){
-        const config = {
-            headers:{
-                'Access-Control-Allow-Origin': 'http://localhost:3000/reservation'
-            }
-          };
         // console.log(prov.provider)
-        axios.post(`${process.env.REACT_APP_API_HOST}/events`, config,{
+        axios.post(`${process.env.REACT_APP_API_HOST}/events`,{
             event_time: date.startDate,
             title: serv.service,
-            provider: "b"
+            provider: prov.provider
           })
           .then(function (response) {
             console.log(response);
@@ -88,12 +86,29 @@ function Reservation() {
           });
     }
 
+    let navigate = useNavigate(); 
+
+
+    function redirect(){
+        let path = `/reservationList`; 
+        navigate(path);
+        // return(
+        // <>
+        //     <Link to="/reservationList">All reservations</Link>
+        // </>)
+    
+    }
+
     return (
         <>
             <h1 class="text-center">
             Create reservation 
             </h1>
-            <div class="d-flex justify-content-center mt-5">
+            <div class="d-flex justify-content-center mx-3">
+                <Button variant="info" onClick={redirect}>All reservations</Button>
+            </div>
+
+            <div class="d-flex justify-content-center mt-3">
                 <div class="d-block">
                     <div class="d-flex justify-content-start">
                         <div class="flex">
@@ -114,7 +129,7 @@ function Reservation() {
                             <Button onClick={createReservation} class="primary">Confirm</Button>
                         </div>
                     </div>
-                    <div id="display-data-Container">
+                    <div id="display-data-Container" class="mt-3">
                         {data.showdata}
                     </div>
                 </div>

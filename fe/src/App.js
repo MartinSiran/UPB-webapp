@@ -5,6 +5,7 @@ import CryptoForm from './components/CryptoForm'
 import Registration from './components/Registration'
 import Logged from './components/Logged';
 import Reservation from './components/Reservation'
+import ReservationList from './components/ReservationList'
 import FileShare from './components/FileShare'
 import {Route, Routes} from "react-router-dom"
 
@@ -16,7 +17,8 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Registration/>}></Route>
         <Route path='/logged' element={<Logged/>}></Route>
-        <Route exact path='/reservation' element={<Reservation/>}></Route>
+        <Route path='/reservation' element={<Reservation/>}></Route>
+        <Route path='/reservationList' element={<ReservationList/>}></Route>
       </Routes>
     </Container>
   );
