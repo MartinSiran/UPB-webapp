@@ -3,76 +3,39 @@ import React from "react";
 import axios from 'axios';
 import Reservation from './Reservation'
 import Button from 'react-bootstrap/Button';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
   
 const ReservationList = () => {
 
-    const results = [];
+  const [all, setAll] = useState([])
 
-    async function getReservations(){
-        const response = await axios.get(`${process.env.REACT_APP_API_HOST}/events`);
+    useEffect(() => {
+      let ignore = false
+      const getRes = async () => {
+        const result = await axios.get(`${process.env.REACT_APP_API_HOST}/events`)
+        console.log(result)
+        if (!ignore) {
+          setAll(result.data.map(el => ({id: el.id, title: el.title, date: el.event_time, user: el.provider})))
+        }
+      }
+      getRes()
+      return () => { ignore = true }
+    }, [])
 
-        // .then(function (response) {
-        //     console.log(response.data);
-        //   })
-        //   .catch(function (error) {
-        //     console.log(error);
-        //   });
-        return response.data
-
-    
-    }
-
-    const response = getReservations()
-
-    function mapResponse(response){
-        console.log(response)
-        response.forEach((response, index) => {
-            results.push(
-              <div key={index}>
-                <h2>title: {response.title}</h2>
-                <h2>provider: {response.provider}</h2>
-                <h2>date: {response.published}</h2>
-                <hr/>
-              </div>,
-            );
-          });
-    }
-
-    mapResponse(response)
-
-    // return (
-    //     <div>
-    //     <h1>Reservation List</h1>
-    //     <Button onClick={getReservations} class="primary">Confirm</Button>
-    //     </div>
-
-
-    // )
     return (
-        
         <div>
             <h1>Reservation List</h1>
-            <Button onClick={getReservations} class="primary">Confirm</Button>
-          {/* {response.map((response, index) => {
-            return (
-              <div key={index}>
-                <h2>title: {response.title}</h2>
-                <h2>provider: {response.provider}</h2>
-                <h2>date: {response.published}</h2>
-                <hr />
-              </div>
-            );
-          })}
-    
-          <hr />
-          <hr />
-          <hr /> */}
-    
-          {results}
+          {all.map(el => (
+            <div key={el.id}>
+              <h2>title: {el.title}</h2>
+              <h2>user: {el.user}</h2>
+              <h2>date: {el.date}</h2>
+              <hr/>
+            </div>
+          ))}
         </div>
       );
-    
+
 };
-  
+
 export default ReservationList;
