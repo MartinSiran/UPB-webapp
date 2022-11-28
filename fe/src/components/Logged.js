@@ -39,7 +39,7 @@ const Logged = () => {
       <CryptoForm action="encrypt" keyType="public"/>
       <h1>Decrypting</h1>
       <CryptoForm action="decrypt" keyType="private"/>
-      <Reservation/>
+      <Reservation loggedUser={loggedUser}/>
     </div>
   )
 }
