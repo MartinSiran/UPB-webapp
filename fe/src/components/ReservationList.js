@@ -1,13 +1,25 @@
 
 import React from "react";
 import axios from 'axios';
-import Reservation from './Reservation'
+import Container from 'react-bootstrap/Container'
+import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import {useState, useEffect} from 'react';
-  
+
 const ReservationList = () => {
 
   const [all, setAll] = useState([])
+  const [filter, setFilter] = useState("")
+
+  const changeFilter = (event) => {
+    setFilter(event.target.value)
+  }
+
+  const searchAll = () => {
+    axios.get(`${process.env.REACT_APP_API_HOST}/events/search/${filter}`).then(res => {
+      setAll(res.data.map(el => ({id: el.id, title: el.title, date: el.event_time, user: el.provider})))
+    })
+  }
 
     useEffect(() => {
       let ignore = false
@@ -23,8 +35,10 @@ const ReservationList = () => {
     }, [])
 
     return (
-        <div>
+        <Container>
             <h1>Reservation List</h1>
+            <Form.Control type="text" placeholder="Search..." onChange={changeFilter}/>
+            <Button variant="primary" onClick={searchAll}>Search</Button>
           {all.map(el => (
             <div key={el.id}>
               <h2>title: {el.title}</h2>
@@ -33,7 +47,7 @@ const ReservationList = () => {
               <hr/>
             </div>
           ))}
-        </div>
+        </Container>
       );
 
 };
