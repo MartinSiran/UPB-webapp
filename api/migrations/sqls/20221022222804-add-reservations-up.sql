@@ -13,7 +13,8 @@ CREATE TABLE `events` (
 
 CREATE TABLE `files` (
   `id` int NOT NULL,
-  `file` longblob NOT NULL
+  `file` longblob NOT NULL,
+  `name` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `comments` (
