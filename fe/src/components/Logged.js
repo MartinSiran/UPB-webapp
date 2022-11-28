@@ -6,6 +6,7 @@ import {useNavigate, Link} from 'react-router-dom';
 import SharedFiles from './SharedFiles';
 import CryptoForm from './CryptoForm'
 import FileShare from './FileShare';
+import CommentForm from './CommentForm';
 import Reservation from './Reservation'
 
 
@@ -38,7 +39,7 @@ const Logged = () => {
       <CryptoForm action="encrypt" keyType="public"/>
       <h1>Decrypting</h1>
       <CryptoForm action="decrypt" keyType="private"/>
-      <Reservation />
+      <Form />
     </div>
   )
 }
