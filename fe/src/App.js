@@ -17,8 +17,6 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Registration/>}></Route>
         <Route path='/logged' element={<Logged/>}></Route>
-        <Route path='/reservation' element={<Reservation/>}></Route>
-        <Route path='/reservationList' element={<ReservationList/>}></Route>
       </Routes>
     </Container>
   );

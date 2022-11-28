@@ -95,7 +95,7 @@ function Reservation(props) {
         // <>
         //     <Link to="/reservationList">All reservations</Link>
         // </>)
-    
+
     }
 
     return (
@@ -103,9 +103,6 @@ function Reservation(props) {
             <h1 class="text-center">
             Create reservation 
             </h1>
-            <div class="d-flex justify-content-center mx-3">
-                <Button variant="info" onClick={redirect}>All reservations</Button>
-            </div>
 
             <div class="d-flex justify-content-center mt-3">
                 <div class="d-block">
