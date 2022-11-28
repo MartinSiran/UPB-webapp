@@ -7,7 +7,7 @@ import axios from 'axios';
 import ReservationList from './ReservationList'
 import { useNavigate } from "react-router-dom";
 
-function Reservation() {
+function Reservation(props) {
 
     let displayData = [];
 
@@ -72,11 +72,10 @@ function Reservation() {
     }
 
     function sendToDatabase(){
-        // console.log(prov.provider)
         axios.post(`${process.env.REACT_APP_API_HOST}/events`,{
             event_time: date.startDate,
             title: serv.service,
-            provider: prov.provider
+            provider: props.loggedUser
           })
           .then(function (response) {
             console.log(response);
@@ -112,10 +111,7 @@ function Reservation() {
                 <div class="d-block">
                     <div class="d-flex justify-content-start">
                         <div class="flex">
-                            <input id="provider" class="form-control" type="text" onChange={handleChangeProvider} placeholder={"Provider"}/>
-                        </div>
-                        <div class="flex">
-                            <input id="startDate" class="form-control" type="date" onChange={handleChangeDate} value={date.startDate}/>
+                            <input id="startDate" class="form-control" type="datetime-local" onChange={handleChangeDate} value={date.startDate}/>
                         </div>
                         <div class="d-flex justify-content-end mx-1">
                             <select class="form-select" aria-label="Default select example" onChange={handleChangeService}>
