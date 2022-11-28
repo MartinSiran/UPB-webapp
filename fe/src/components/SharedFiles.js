@@ -19,7 +19,7 @@ const SharedFiles = (props) => {
     <div>
       <h1>Shared with me</h1>
       {userFiles.map((file) => (
-        <SharedFile key={file.id} file={file.id} />
+        <SharedFile key={file.id} file={file.id} name={file.name}/>
       ))}
     </div>
   )

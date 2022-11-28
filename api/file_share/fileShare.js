@@ -1,17 +1,17 @@
 const database = require('../database')
 
 const getFile = (res, fileId) => {
-    const query = "SELECT file FROM files WHERE id=(?)"
+    const query = "SELECT name, file FROM files WHERE id=(?)"
     database.query(query, [fileId], (error, data) => {
         if (error) {
             return res.sendStatus(500)
         }
-        return res.send(data[0].file)
+        return res.send({fileName: data[0].name, file: data[0].file})
     })
 }
 
 const getFilesForUser = (res, userId) => {
-    const query = "SELECT f.id FROM files f JOIN user_files uf ON f.id=uf.file_id WHERE uf.user_id=(?)"
+    const query = "SELECT f.id, f.name FROM files f JOIN user_files uf ON f.id=uf.file_id WHERE uf.user_id=(?)"
     database.query(query, [userId], (error, data) => {
         if (error) {
             return res.sendStatus(500)
@@ -20,10 +20,10 @@ const getFilesForUser = (res, userId) => {
     })
 }
 
-const saveFile = async (file) => {
-    const query = "INSERT INTO files (file) VALUES (?)"
+const saveFile = async (fileName, file) => {
+    const query = "INSERT INTO files (name, file) VALUES (?,?)"
     return new Promise((resolve, reject) => {
-        database.query(query, [file], (error, data) => {
+        database.query(query, [fileName, file], (error, data) => {
             if (error) {
                 reject(error)
             }
@@ -42,8 +42,8 @@ const shareFileWithUser = (userId, fileId) => {
     })
 }
 
-const shareFileWithUsers = async (users, file) => {
-    let fileId = await saveFile(file)
+const shareFileWithUsers = async (users, fileName, file) => {
+    let fileId = await saveFile(fileName, file)
     users.forEach((userId) => {
         shareFileWithUser(userId, fileId)
     })
