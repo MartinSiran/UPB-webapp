@@ -8,6 +8,7 @@ import CryptoForm from './CryptoForm'
 import FileShare from './FileShare';
 import CommentForm from './CommentForm';
 import Reservation from './Reservation'
+import ReservationList from './ReservationList';
 
 
 
@@ -40,6 +41,9 @@ const Logged = () => {
       <h1>Decrypting</h1>
       <CryptoForm action="decrypt" keyType="private"/>
       <Reservation loggedUser={loggedUser}/>
+      <ReservationList/>
+      <h1>Comments</h1>
+      <CommentForm action="comment"/>
     </div>
   )
 }
