@@ -1,10 +1,13 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button';
 import {useState} from 'react';
+import { Link } from "react-router-dom";
 import { render } from 'react-dom';
 import axios from 'axios';
+import ReservationList from './ReservationList'
+import { useNavigate } from "react-router-dom";
 
-function Form() {
+function Reservation(props) {
 
     let displayData = [];
 
@@ -24,6 +27,10 @@ function Form() {
         service : ""
     });
 
+    const [prov, setProv] = useState({
+        provider : ""
+    });
+
     const handleChangeDate = event => {
         setDate({
             startDate : event.target.value
@@ -40,9 +47,17 @@ function Form() {
         console.log('value is:',  event.target.value);
     };
 
+    const handleChangeProvider = event => {
+        setProv({
+            provider : event.target.value
+        });
+
+        console.log('value is:',  event.target.value);
+    };
+
     function createReservation() {
 
-        displayData.push(<div  id="display-data mt-3"><p>{date.startDate}  {serv.service}</p></div>); 
+        displayData.push(<div  id="display-data mt-3"><p>{prov.provider} {date.startDate}  {serv.service}</p></div>); 
         console.log(displayData)
 
         setData({
@@ -57,10 +72,10 @@ function Form() {
     }
 
     function sendToDatabase(){
-        axios.post(`${process.env.REACT_APP_API_HOST}/events`, {
+        axios.post(`${process.env.REACT_APP_API_HOST}/events`,{
             event_time: date.startDate,
             title: serv.service,
-            provider: "a"
+            provider: props.loggedUser
           })
           .then(function (response) {
             console.log(response);
@@ -70,16 +85,30 @@ function Form() {
           });
     }
 
+    let navigate = useNavigate(); 
+
+
+    function redirect(){
+        let path = `/reservationList`; 
+        navigate(path);
+        // return(
+        // <>
+        //     <Link to="/reservationList">All reservations</Link>
+        // </>)
+
+    }
+
     return (
         <>
             <h1 class="text-center">
             Create reservation 
             </h1>
-            <div class="d-flex justify-content-center mt-5">
+
+            <div class="d-flex justify-content-center mt-3">
                 <div class="d-block">
                     <div class="d-flex justify-content-start">
                         <div class="flex">
-                            <input id="startDate" class="form-control" type="date" onChange={handleChangeDate} value={date.startDate}/>
+                            <input id="startDate" class="form-control" type="datetime-local" onChange={handleChangeDate} value={date.startDate}/>
                         </div>
                         <div class="d-flex justify-content-end mx-1">
                             <select class="form-select" aria-label="Default select example" onChange={handleChangeService}>
@@ -93,7 +122,7 @@ function Form() {
                             <Button onClick={createReservation} class="primary">Confirm</Button>
                         </div>
                     </div>
-                    <div id="display-data-Container">
+                    <div id="display-data-Container" class="mt-3">
                         {data.showdata}
                     </div>
                 </div>
@@ -103,4 +132,4 @@ function Form() {
     )
 }
 
-export default Form;
+export default Reservation;

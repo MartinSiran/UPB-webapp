@@ -41,4 +41,17 @@ router.get('/', function(req, res, next) {
   });  
 });
 
+router.get('/search/:filter', function(req, res, next) {
+  let query = "SELECT * FROM events WHERE LOWER(provider) LIKE ? OR LOWER(title) LIKE ?";
+  database.query(query, ['%'+req.params.filter.toLowerCase()+'%', '%'+req.params.filter.toLowerCase()+'%'], function(error, data) {
+    if (error) {
+      console.log(error)
+      return res.sendStatus(500);
+    }
+    else{
+      return res.send(data);
+    }
+  });
+});
+
 module.exports = router;
