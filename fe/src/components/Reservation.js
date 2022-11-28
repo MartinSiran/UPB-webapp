@@ -4,7 +4,7 @@ import {useState} from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
 
-function Form() {
+function Reservation() {
 
     let displayData = [];
 
@@ -24,6 +24,10 @@ function Form() {
         service : ""
     });
 
+    const [prov, setProv] = useState({
+        provider1 : ""
+    });
+
     const handleChangeDate = event => {
         setDate({
             startDate : event.target.value
@@ -40,9 +44,17 @@ function Form() {
         console.log('value is:',  event.target.value);
     };
 
+    const handleChangeProvider = event => {
+        setProv({
+            provider : event.target.value
+        });
+
+        console.log('value is:',  event.target.value);
+    };
+
     function createReservation() {
 
-        displayData.push(<div  id="display-data mt-3"><p>{date.startDate}  {serv.service}</p></div>); 
+        displayData.push(<div  id="display-data mt-3"><p>{prov.provider1} {date.startDate}  {serv.service}</p></div>); 
         console.log(displayData)
 
         setData({
@@ -57,10 +69,16 @@ function Form() {
     }
 
     function sendToDatabase(){
-        axios.post(`${process.env.REACT_APP_API_HOST}/events`, {
+        const config = {
+            headers:{
+                'Access-Control-Allow-Origin': 'http://localhost:3000/reservation'
+            }
+          };
+        // console.log(prov.provider)
+        axios.post(`${process.env.REACT_APP_API_HOST}/events`, config,{
             event_time: date.startDate,
             title: serv.service,
-            provider: "a"
+            provider: "b"
           })
           .then(function (response) {
             console.log(response);
@@ -78,6 +96,9 @@ function Form() {
             <div class="d-flex justify-content-center mt-5">
                 <div class="d-block">
                     <div class="d-flex justify-content-start">
+                        <div class="flex">
+                            <input id="provider" class="form-control" type="text" onChange={handleChangeProvider} placeholder={"Provider"}/>
+                        </div>
                         <div class="flex">
                             <input id="startDate" class="form-control" type="date" onChange={handleChangeDate} value={date.startDate}/>
                         </div>
@@ -103,4 +124,4 @@ function Form() {
     )
 }
 
-export default Form;
+export default Reservation;
