@@ -16,7 +16,7 @@ function App() {
     <Container>
       <Routes>
         <Route exact path='/' element={<Registration/>}></Route>
-        <Route path='/logged' element={<Logged/>}></Route>
+        <Route path='/logged/*' element={<Logged/>}></Route>
       </Routes>
     </Container>
   );
